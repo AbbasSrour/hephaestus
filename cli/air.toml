@@ -1,0 +1,21 @@
+# Config file for [Air](https://github.com/cosmtrek/air) in TOML format
+root = "." # . or absolute path, please note that the directories following must be under root
+tmp_dir = "/tmp"
+
+[build]
+cmd = "go build -o ./tmp/app/engine main.go" # Just plain old shell command. You could use `make` as well.
+bin = "/tmp/app" # Binary file yields from `cmd`.
+full_bin = "./tmp/app/engine http" # This is how you start to run your application.
+log = "air_errors.log" # This log file places in your tmp_dir.
+include_ext = ["go", "yaml"] # Watch these filename extensions.
+exclude_dir = ["tmp"] # Ignore these filename extensions or directories.
+delay = 500 # ms # It's not necessary to trigger build each time file changes if it's too frequent.
+
+[log]
+time = true # Show log time
+
+[color]
+
+[misc]
+# Delete tmp directory on exit
+clean_on_exit = true
