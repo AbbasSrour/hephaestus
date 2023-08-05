@@ -9,11 +9,11 @@ import (
 func IsPkgInstalled(pkg string) bool {
 	var err error
 
-	checkcmd := exec.Command("bash", "-c", "sudo pacman -Qi "+pkg)
-	checkcmd.Stderr = os.Stderr
-	checkcmd.Stdin = os.Stdin
+	checkCmd := exec.Command("bash", "-c", "sudo pacman -Qi "+pkg)
+	checkCmd.Stderr = os.Stderr
+	checkCmd.Stdin = os.Stdin
 
-	if err = checkcmd.Run(); err == nil {
+	if err = checkCmd.Run(); err == nil {
 		return true
 	}
 

@@ -134,3 +134,31 @@ func InstallSqlite() {
 		}
 	}
 }
+
+func LogoutFromGithubFirefox() {
+	InstallSqlite()
+
+	sqliteFile := "~/.mozilla/firefox/*.default-release/cookies.sqlite"
+	_, err := os.Stat(sqliteFile)
+
+	if os.IsNotExist(err) {
+		return
+	}
+
+	sqlCmd := fmt.Sprintf("delete from moz_cookies where host like '%%github%%';")
+
+	cmd := exec.Command("sqlite3", sqliteFile, sqlCmd)
+	cmd.Stdin = os.Stdin
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+
+	if err := cmd.Run(); err != nil {
+		fmt.Println("Error logging out from github!")
+		if tryAgain := helpers.CheckUserInput("Try again?"); tryAgain {
+			LogoutFromGithubFirefox()
+			return
+		}
+	}
+
+	fmt.Println("Successfully logged out from github!")
+}
